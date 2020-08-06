@@ -1,3 +1,5 @@
+dofile("gamemodes/lhrp/utils.nut", true)
+
 local red = "#ff0000"
 local green = "#00ff00"
 local blue = "#0000ff"
@@ -39,16 +41,24 @@ function onPlayerDisconnect(playerid)
 
 function onPlayerCommand(playerid,message,params)
 {
-	if (message == "v") {
-		local pos = playerGetPosition(playerid)
+	if (message == "v") 
+	{
+		local pos = _playerGetPosition(playerid)
 		if (params.tointeger() > 169)
 		{
 			sendPlayerMessage(playerid,red + "[ERROR] Wrong ID") 
 			return
 		}
 
-		vehicleSpawn(params.tointeger(),pos[0]+2,pos[1],pos[2],1.0,0.0,0.0)
-	} else {
-		// code
+		_vehicleSpawn(params,pos[0]+3,pos[1],pos[2],1.0,0.0,0.0)
+	}
+	else if (message == "pos") 
+	{
+		local pos = _playerGetPosition(playerid)
+		print("POSITION "+params+": "+pos[0]+","+pos[1]+","+pos[2])
+	} 
+	else 
+	{
+		//sendPlayerMessage(playerid,red + "[ERROR] onPlayerCommand - "+message+", "+params)
 	}
 }
