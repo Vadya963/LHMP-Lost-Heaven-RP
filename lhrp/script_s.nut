@@ -1,5 +1,35 @@
 dofile("gamemodes/lhrp/utils.nut", true)
 
+function sqlite3(text)
+{
+	local table = {}
+	local result = sqlite3_query("gamemodes/lhrp/lhmp-rp.db", text)
+
+	if(text.find("U") == 0 || text.find("I") == 0 || text.find("D") == 0)
+	{
+		sqlite3_step(result)
+	}
+	else if(text.find("S") == 0)
+	{	
+		while(sqlite3_step(result) == SQLITE_ROW) 
+		{
+			for(local i = 0; i < sqlite3_column_count(result); i++) 
+			{
+				if (!table_find_key(table,sqlite3_column_name(result, i)))
+				{
+					table[sqlite3_column_name(result, i)] <- []
+				}
+
+				table[sqlite3_column_name(result, i)].push(sqlite3_column_text(result, i))
+			}
+		}
+	}
+
+	sqlite3_finalize(result)
+
+	return table
+}
+
 local red = "#ff0000"
 local green = "#00ff00"
 local blue = "#0000ff"
@@ -11,6 +41,8 @@ local gray50 = "#808080"
 local gray75 = "#404040"
 local black = "#000000"
 local cyan = "#00FFFF"
+
+local spawn_pos = [-575.101,1622.8,-15.6957]//--стартовая позиция
 
 function onServerInit()
 {
