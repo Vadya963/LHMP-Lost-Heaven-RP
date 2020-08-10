@@ -44,6 +44,8 @@ local cyan = "#00FFFF"
 
 local spawn_pos = [-575.101,1622.8,-15.6957]//--стартовая позиция
 
+local car = array(serverGetMaxPlayers(), false)
+
 function onServerInit()
 {
 	serverSetGamemodeName("RolePlay")
@@ -57,7 +59,7 @@ function onPickupTaken(pickupid,playerid)
 
 function onPlayerConnect(playerid)
 {
-
+	playerToggleCityMusic(playerid,0)
 	print(playerGetName(playerid)+"["+playerid+"] has been connected to the server.")
 }
 
@@ -76,19 +78,30 @@ function onPlayerCommand(playerid,message,params)
 	if (message == "v") 
 	{
 		local pos = _playerGetPosition(playerid)
-		if (params.tointeger() > 169)
+		if (params.tointeger() > 69)
 		{
 			sendPlayerMessage(playerid,red + "[ERROR] Wrong ID") 
 			return
 		}
 
-		_vehicleSpawn(params,pos[0]+3,pos[1],pos[2],1.0,0.0,0.0)
+		local spl = split(params, " ")
+		/*if (car[playerid] != false)
+		{
+			vehicleDelete(car[playerid])
+		}*/
+
+		car[playerid] = _vehicleSpawn(spl[0],spl[1], pos[0]+3,pos[1],pos[2],1.0,0.0,0.0)
 	}
 	else if (message == "pos") 
 	{
 		local pos = _playerGetPosition(playerid)
 		print("POSITION "+params+": "+pos[0]+","+pos[1]+","+pos[2])
 	} 
+	else if (message == "getfuel") 
+	{
+		local vehicle = playerInVehicleID(playerid)
+		playerAddConsoleText(playerid, "ffffff", "fuel "+vehicleGetFuel(vehicle))
+	}
 	else 
 	{
 		//sendPlayerMessage(playerid,red + "[ERROR] onPlayerCommand - "+message+", "+params)
