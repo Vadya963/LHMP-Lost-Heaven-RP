@@ -60,6 +60,8 @@ function onPickupTaken(pickupid,playerid)
 function onPlayerConnect(playerid)
 {
 	playerToggleCityMusic(playerid,0)
+	playerEnableMoney(playerid, 1)
+
 	print(playerGetName(playerid)+"["+playerid+"] has been connected to the server.")
 }
 
@@ -101,6 +103,12 @@ function onPlayerCommand(playerid,message,params)
 	{
 		local vehicle = playerInVehicleID(playerid)
 		playerAddConsoleText(playerid, "ffffff", "fuel "+vehicleGetFuel(vehicle))
+	}
+	else if (message == "setmoney") 
+	{
+		local money = params.tointeger()
+		playerSetMoney(playerid, money)
+		playerAddConsoleText(playerid, "ffffff", "+"+money+"$")
 	}
 	else 
 	{

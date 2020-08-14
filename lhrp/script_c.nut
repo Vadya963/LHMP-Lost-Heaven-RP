@@ -22,7 +22,7 @@ function getRealData () {
 		time = time+(date().month+1)
 	}
 
-	time = time+"."+(date().year-90)
+	time = time+"."+date().year
 
 	return time
 }
