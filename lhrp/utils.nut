@@ -170,6 +170,19 @@ function getRealTime () {
 	return time
 }
 
+function RGBToHex(color, alpha=0)
+{
+	// Alpha check
+	if (alpha)
+	{
+		return format("#%.2X%.2X%.2X%.2X", color[0], color[1], color[2], alpha)
+	}
+	else
+	{
+		return format("#%.2X%.2X%.2X", color[0], color[1], color[2])
+	}
+}
+
 function _playerSetPosition (playerid, x,y,z) {
 	playerSetPosition(playerid, x.tofloat(),z.tofloat(),y.tofloat())
 }
@@ -194,4 +207,8 @@ function _vehicleSpawn (id, variant, x,y,z, rx,ry,rz) {
 	}
 
 	return vehicle
+}
+
+function _playerAddConsoleText (playerid, color, text) {
+	playerAddConsoleText(playerid, color.slice(1,color.len()), text)
 }

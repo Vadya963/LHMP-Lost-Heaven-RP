@@ -1,5 +1,27 @@
 dofile("gamemodes/lhrp/utils.nut", true)
 
+//----цвета----
+local color_mes = {
+	color_tips = [168,228,160],//бабушкины яблоки
+	yellow = [255,255,0],//желтый
+	red = [255,0,0],//красный
+	red_try = [200,0,0],//красный
+	blue = [0,150,255],//синий
+	white = [255,255,255],//белый
+	green = [0,255,0],//зеленый
+	green_try = [0,200,0],//зеленый
+	turquoise = [0,255,255],//бирюзовый
+	orange = [255,100,0],//оранжевый
+	orange_do = [255,150,0],//оранжевый do
+	pink = [255,100,255],//розовый
+	lyme = [130,255,0],//лайм админский цвет
+	svetlo_zolotoy = [255,255,130],//светло-золотой
+	crimson = [220,20,60],//малиновый
+	purple = [175,0,255],//фиолетовый
+	gray = [150,150,150],//серый
+	green_rc = [115,180,97],//темно зеленый
+}
+
 function sqlite3(text)
 {
 	local table = {}
@@ -29,18 +51,6 @@ function sqlite3(text)
 
 	return table
 }
-
-local red = "#ff0000"
-local green = "#00ff00"
-local blue = "#0000ff"
-local yellow = "#ffff00"
-local orange = "#ff7700"
-local white = "#ffffff"
-local gray25 = "#bfbfbf"
-local gray50 = "#808080"
-local gray75 = "#404040"
-local black = "#000000"
-local cyan = "#00FFFF"
 
 local spawn_pos = [-575.101,1622.8,-15.6957]//--стартовая позиция
 
@@ -82,7 +92,7 @@ function onPlayerCommand(playerid,message,params)
 		local pos = _playerGetPosition(playerid)
 		if (params.tointeger() > 69)
 		{
-			sendPlayerMessage(playerid,red + "[ERROR] Wrong ID") 
+			sendPlayerMessage(playerid,RGBToHex(color_mes.red) + "[ERROR] Wrong ID") 
 			return
 		}
 
@@ -102,16 +112,16 @@ function onPlayerCommand(playerid,message,params)
 	else if (message == "getfuel") 
 	{
 		local vehicle = playerInVehicleID(playerid)
-		playerAddConsoleText(playerid, "ffffff", "fuel "+vehicleGetFuel(vehicle))
+		_playerAddConsoleText(playerid, RGBToHex(color_mes.white), "fuel "+vehicleGetFuel(vehicle))
 	}
 	else if (message == "setmoney") 
 	{
 		local money = params.tointeger()
 		playerSetMoney(playerid, money)
-		playerAddConsoleText(playerid, "ffffff", "+"+money+"$")
+		_playerAddConsoleText(playerid, RGBToHex(color_mes.white), "+"+money+"$")
 	}
 	else 
 	{
-		//sendPlayerMessage(playerid,red + "[ERROR] onPlayerCommand - "+message+", "+params)
+		//sendPlayerMessage(playerid,RGBToHex(color_mes.red) + "[ERROR] onPlayerCommand - "+message+", "+params)
 	}
 }
