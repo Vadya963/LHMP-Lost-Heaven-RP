@@ -37,7 +37,7 @@ function sqlite3(text)
 		{
 			for(local i = 0; i < sqlite3_column_count(result); i++) 
 			{
-				if (!table_find_key(table,sqlite3_column_name(result, i)))
+				if (!table.rawin(sqlite3_column_name(result, i)))
 				{
 					table[sqlite3_column_name(result, i)] <- []
 				}
