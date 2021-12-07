@@ -89,17 +89,6 @@ function random(min=0, max=RAND_MAX)
 	return (rand() % ((max + 1) - min)) + min//функция для получения рандомных чисел
 }
 
-function table_find_key (table, key) {
-	foreach (k, v in table) {
-		if(k == key)
-		{
-			return true
-		}
-	}
-
-	return false
-}
-
 function table_find_value (table, value) {
 	foreach (k, v in table) {
 		if(v == value)
@@ -197,7 +186,7 @@ function _vehicleSpawn (id, variant, x,y,z, rx,ry,rz) {
 	local id = id.tointeger()
 	local variant = variant.tointeger()
 
-	if(table_find_key(vehicle_variant[id][1], variant))
+	if(vehicle_variant[id][1].rawin(variant))
 	{
 		vehicle = vehicleSpawn(vehicle_variant[id][1][variant], x.tofloat(),z.tofloat(),y.tofloat(), rx.tofloat(),rz.tofloat(),ry.tofloat())
 	}
